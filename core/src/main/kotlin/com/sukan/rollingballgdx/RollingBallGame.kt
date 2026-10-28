@@ -165,7 +165,7 @@ class RollingBallGame : ApplicationAdapter() {
 
     override fun create() {
 
-        val test: Int = "hello"
+        val test: String = "hello"
 
         isDesktop = Gdx.app.type == Application.ApplicationType.Desktop
 
