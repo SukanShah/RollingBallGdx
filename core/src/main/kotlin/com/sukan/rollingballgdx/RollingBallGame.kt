@@ -164,6 +164,9 @@ class RollingBallGame : ApplicationAdapter() {
     private var workFrames = 0
 
     override fun create() {
+
+        val test: Int = "hello"
+
         isDesktop = Gdx.app.type == Application.ApplicationType.Desktop
 
         modelBatch = ModelBatch()
