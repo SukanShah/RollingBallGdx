@@ -47,8 +47,9 @@ android {
     applicationId 'com.sukan.rollingballgdx'
     minSdkVersion 21
     targetSdkVersion 36
-    versionCode 1
-    versionName "1.0"
+    def runNumber = System.getenv("GITHUB_RUN_NUMBER")
+    versionCode runNumber ? runNumber.toInteger() : 1
+    versionName runNumber ? "1.0.${runNumber}" : "1.0"
   }
   compileOptions {
     sourceCompatibility "8"
