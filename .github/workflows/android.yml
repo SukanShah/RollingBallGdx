@@ -37,3 +37,22 @@ jobs:
         with:
           name: debug-apk
           path: android/build/outputs/apk/debug/*.apk
+
+      - name: Decode keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.jks"
+
+      - name: Build signed release APK
+        env:
+          KEYSTORE_PATH: ${{ runner.temp }}/release.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew android:assembleRelease
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: release-apk
+          path: android/build/outputs/apk/release/*.apk

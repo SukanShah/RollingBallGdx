@@ -22,6 +22,19 @@ android {
       jniLibs.setSrcDirs(['libs'])
     }
   }
+
+  signingConfigs {
+    release {
+      def keystorePath = System.getenv("KEYSTORE_PATH")
+      if (keystorePath) {
+        storeFile file(keystorePath)
+        storePassword System.getenv("KEYSTORE_PASSWORD")
+        keyAlias System.getenv("KEY_ALIAS")
+        keyPassword System.getenv("KEY_PASSWORD")
+      }
+    }
+  }
+
   packagingOptions {
 		resources {
 			excludes += ['META-INF/robovm/ios/robovm.xml', 'META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES',
@@ -46,11 +59,14 @@ android {
     release {
       minifyEnabled true
       proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), 'proguard-rules.pro'
+      if (System.getenv("KEYSTORE_PATH")) {
+        signingConfig signingConfigs.release
+      }
     }
   }
 
   kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
-  
+
 }
 
 repositories {
