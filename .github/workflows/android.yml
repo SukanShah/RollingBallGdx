@@ -31,3 +31,9 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew core:test
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: debug-apk
+          path: android/build/outputs/apk/debug/*.apk
