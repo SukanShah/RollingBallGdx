@@ -1,5 +1,7 @@
 # RollingBallGdx
 
+[![Android CI](https://github.com/SukanShah/RollingBallGdx/actions/workflows/android.yml/badge.svg)](https://github.com/SukanShah/RollingBallGdx/actions/workflows/android.yml)
+
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
 
 This project was generated with a Kotlin project template that includes Kotlin application launchers and [KTX](https://libktx.github.io/) utilities.
