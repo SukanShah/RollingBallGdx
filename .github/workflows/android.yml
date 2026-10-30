@@ -56,3 +56,16 @@ jobs:
         with:
           name: release-apk
           path: android/build/outputs/apk/release/*.apk
+
+      - name: Distribute release APK to testers
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/firebase-sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json"
+          npx --yes firebase-tools@15 appdistribution:distribute android/build/outputs/apk/release/android-release.apk \
+            --app "$FIREBASE_APP_ID" \
+            --groups "testers" \
+            --release-notes "Build ${{ github.run_number }} from commit ${{ github.sha }}"
